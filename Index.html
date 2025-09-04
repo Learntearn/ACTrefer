@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReferClick - Earn \$1 per 2000 Clicks</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        .card { background: white; border-radius: 15px; padding: 30px; margin: 20px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .auth-section { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; }
+        .auth-form { background: white; padding: 20px; border-radius: 10px; min-width: 300px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; }
+        .btn { background: #667eea; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: all 0.3s; }
+        .btn:hover { background: #5a6fd8; transform: translateY(-2px); }
+        .dashboard { display: none; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: bold; margin-bottom: 5px; }
+        .stat-label { opacity: 0.9; }
+        .link-section { margin-top: 20px; }
+        .link-item { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #667eea; }
+        .hidden { display: none; }
+        .pricing { text-align: center; margin: 20px 0; }
+        .price-tag { background: #28a745; color: white; padding: 15px 30px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; display: inline-block; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0; }
+        .feature { text-align: center; padding: 20px; }
+        .feature-icon { font-size: 3rem; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 ReferClick</h1>
+            <p>Generate Quality Traffic - Earn \$1 per 2000 Clicks</p>
+        </div>
+
+        <div class="pricing">
+            <div class="price-tag">💰 Only \$1 for 2000+ Quality Clicks!</div>
+        </div>
+
+        <!-- Login/Signup Section -->
+        <div id="authSection" class="auth-section">
+            <div class="auth-form">
+                <h3>🔐 Login</h3>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="loginEmail" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••">
+                </div>
+                <button class="btn" onclick="login()">Login</button>
+            </div>
+            
+            <div class="auth-form">
+                <h3>📝 Sign Up</h3>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="signupEmail" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="signupPassword" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password:</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••">
+                </div>
+                <button class="btn" onclick="signup()">Sign Up</button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard">
+            <div class="card">
+                <h2>📊 Your Dashboard</h2>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalClicks">0</div>
+                        <div class="stat-label">Total Clicks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="earnings">\$0.00</div>
+                        <div class="stat-label">Earnings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="activeLinks">0</div>
+                        <div class="stat-label">Active Links</div>
+                    </div>
+                </div>
+                
+                <div class="link-section">
+                    <h3>🔗 Add New Referral Link</h3>
+                    <div class="form-group">
+                        <input type="url" id="newLink" placeholder="https://yourwebsite.com" style="width: 70%; margin-right: 10px;">
+                        <button class="btn" onclick="addLink()">Add Link</button>
+                    </div>
+                </div>
+
+                <div class="link-section">
+                    <h3>📈 Your Links</h3>
+                    <div id="linksList">
+                        <!-- Links will be added here -->
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="requestPayout()" style="background: #28a745;">💳 Request Payout</button>
+                    <button class="btn" onclick="logout()" style="background: #dc3545; margin-left: 10px;">🚪 Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="card">
+            <h2 style="text-align: center; margin-bottom: 30px;">✨ Why Choose ReferClick?</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered</h3>
+                    <p>Advanced AI manages traffic quality and delivery automatically</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h3>Low Cost</h3>
+                    <p>Just \$1 for 2000+ quality clicks - best price in market</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Start receiving clicks within 24 hours of submission</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Quality Traffic</h3>
+                    <p>Real users, geo-targeted, fraud protection included</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let userLinks = [];
+        
+        // Simulate user database
+        let users = JSON.parse(localStorage.getItem('users') || '[]');
+        let clickData = JSON.parse(localStorage.getItem('clickData') || '{}');
+
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                showDashboard();
+                loadUserData();
+            } else {
+                alert('❌ Invalid credentials! Please try again.');
+            }
+        }
+
+        function signup() {
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirm) {
+                alert('❌ Passwords do not match!');
+                return;
+            }
+            
+            if (users.find(u => u.email === email)) {
+                alert('❌ Email already exists!');
+                return;
+            }
+            
+            const newUser = { email, password, links: [], totalClicks: 0, earnings: 0 };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            currentUser = newUser;
+            showDashboard();
+            loadUserData();
+            alert('🎉 Account created successfully!');
+        }
+
+        function showDashboard() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('authSection').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+        }
+
+        function addLink() {
+            const url = document.getElementById('newLink').value;
+            if (!url) {
+                alert('❌ Please enter a valid URL!');
+                return;
+            }
+            
+            const linkId = Date.now();
+            const newLink = { id: linkId, url, clicks: 0, earnings: 0, dateAdded: new Date().toLocaleDateString() };
+            currentUser.links.push(newLink);
+            
+            // Update users array
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex] = currentUser;
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            document.getElementById('newLink').value = '';
+            loadUserData();
+            alert('✅ Link added successfully! AI is now generating traffic...');
+            
+            // Simulate AI traffic generation
+            simulateTrafficGeneration(linkId);
+        }
+
+        function simulateTrafficGeneration(linkId) {
+            // Simulate gradual click generation
+            const intervals = [5000, 10000, 15000, 20000]; // Different intervals
+            
+            intervals.forEach((interval, index) => {
+                setTimeout(() => {
+                    const clicksToAdd = Math.floor(Math.random() * 50) + 20; // 20-70 clicks
+                    addClicksToLink(linkId, clicksToAdd);
+                }, interval);
+            });
+        }
+
+        function addClicksToLink(linkId, clicks) {
+            const link = currentUser.links.find(l => l.id === linkId);
+            if (link) {
+                link.clicks += clicks;
+                link.earnings = Math.floor(link.clicks / 2000) * 1; // \$1 per 2000 clicks
+                
+                currentUser.totalClicks += clicks;
+                currentUser.earnings = currentUser.links.reduce((sum, l) => sum + l.earnings, 0);
+                
+                // Update localStorage
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                users[userIndex] = currentUser;
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                loadUserData();
+            }
+        }
+
+        function loadUserData() {
+            document.getElementById('totalClicks').textContent = currentUser.totalClicks;
+            document.getElementById('earnings').textContent = '$' + currentUser.earnings.toFixed(2);
+            document.getElementById('activeLinks').textContent = currentUser.links.length;
+            
+            const linksList = document.getElementById('linksList');
+            linksList.innerHTML = '';
+            
+            currentUser.links.forEach(link => {
+                const linkDiv = document.createElement('div');
+                linkDiv.className = 'link-item';
+                linkDiv.innerHTML = `
+                    <strong>🔗 ${link.url}</strong><br>
+                    📊 Clicks: ${link.clicks} | 💰 Earned: $${link.earnings.toFixed(2)} | 📅 Added: ${link.dateAdded}
+                    <button class="btn" onclick="deleteLink(${link.id})" style="float: right; background: #dc3545; padding: 5px 10px; font-size: 12px;">Delete</button>
+                `;
+                linksList.appendChild(linkDiv);
+            });
+        }
+
+        function deleteLink(linkId) {
+            currentUser.links = currentUser.links.filter(l => l.id !== linkId);
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex] = currentUser;
+            localStorage.setItem('users', JSON.stringify(users));
+            loadUserData();
+            alert('🗑️ Link deleted successfully!');
+        }
+
+        function requestPayout() {
+            if (currentUser.earnings >= 1) {
+                alert(`💳 Payout request of $${currentUser.earnings.toFixed(2)} submitted! You'll receive payment within 24-48 hours via PayPal.`);
+                currentUser.earnings = 0;
+                currentUser.links.forEach(link => link.earnings = 0);
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                users[userIndex] = currentUser;
+                localStorage.setItem('users', JSON.stringify(users));
+                loadUserData();
+            } else {
+                alert('❌ Minimum payout is \$1.00. Keep earning!');
+            }
+        }
+
+        // Initialize demo data
+        if (users.length === 0) {
+            users.push({
+                email: 'demo@referclick.com',
+                password: 'demo123',
+                links: [{id: 1, url: 'https://example.com', clicks: 1500, earnings: 0, dateAdded: '2025-09-04'}],
+                totalClicks: 1500,
+                earnings: 0
+            });
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+    </script>
+</body>
+</html>
